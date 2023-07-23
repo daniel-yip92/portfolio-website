@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+    <div class="calculator">
+        <h1>Simple Calculator</h1>
+        <p>Integrating the python mini-task</p>
+    </div>
+
+    <form class="container" action="." method="POST">
+        <div class="row">
+            <div class="col-2">
+                <label for="inputNumber1" class="col-form-label">First Number</label>
+            </div>
+            <div class="col">
+                <input type="number" min="0" name="inputNumber1" id="inputNumber1" value="{{ request.form['inputNumber1'] }}"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+                <label for="inputNumber2" class="col-form-label">Second Number</label>
+            </div>
+            <div class="col">
+                <input type="number" min="0" name="inputNumber2" id="inputNumber2" value="{{ request.form['inputNumber2'] }}"></p>
+            </div>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="operator" id="+" value="+" checked>
+            <label class="form-check-label" for="+">
+                +
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="operator" id="-" value="-">
+            <label class="form-check-label" for="-">
+                -
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="operator" id="*" value="*">
+            <label class="form-check-label" for="*">
+                *
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="operator" id="/" value="/">
+            <label class="form-check-label" for="/">
+                /
+            </label>
+        </div>
+
+        <p><input type="submit" class="btn btn-success" value="Calculate"></p>
+    </form>
+
+    <fieldset disabled>
+        <div class="form-group">
+    		<label class="control-label col-xs-3">Result :</label>
+    		<div class="col-sm-4">
+    			<input type="text" id="disabledTextInput" name="result" class="form-control" placeholder={{ result }}>
+    		</div>
+    	</div>
+    </fieldset>
+
+
+</html>
+{% endblock %}
