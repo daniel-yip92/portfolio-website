@@ -55,7 +55,7 @@
                                 <th scope="row">{{ comment.id }}</th>
                                 <td>
                                     <div class="row" style="margin-bottom: 1ex">{{ comment.content }}</div>
-                                    <div><small>Posted {{ timestamp.strftime("%A, %d %B %Y at %H:%M") }} by anonymous</small></div>
+                                    <div><small>Posted {{ comment.posted.strftime("%A, %d %B %Y at %H:%M") }} by anonymous</small></div>
                                 </td>
                             </tr>
                             {% endfor %}

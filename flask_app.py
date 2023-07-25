@@ -56,6 +56,7 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(4096))
+    posted = db.Column(db.DateTime, default=datetime.now)
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -68,7 +69,7 @@ def index():
         time_key_update = list(data_dict.keys())
         zipped_weather_data = list(zip(weatherData.get('hourly').get('temperature_2m'), weatherData.get('hourly').get('relativehumidity_2m'), weatherData.get('hourly').get('apparent_temperature'), weatherData.get('hourly').get('precipitation_probability')))
         data_dict.update(list(zip(time_key_update, zipped_weather_data)))
-        return render_template("main_page.html", comments=Comment.query.all(), data=data_dict, timestamp=datetime.now())
+        return render_template("main_page.html", comments=Comment.query.all(), data=data_dict)
 
     if not current_user.is_authenticated:
         return redirect(url_for('index'))
