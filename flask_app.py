@@ -1,9 +1,10 @@
 
 # A very simple Flask Hello World app for you to get started with...
 
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, json
 from flask_sqlalchemy import SQLAlchemy
 from flask_calculator import calculate
+import requests
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -28,8 +29,18 @@ class Comment(db.Model):
 
 @app.route('/', methods=["GET", "POST"])
 def index():
+    weatherData = ''
+    url = "https://api.open-meteo.com/v1/forecast?latitude=1.2897&longitude=103.8501&hourly=temperature_2m,relativehumidity_2m,apparent_temperature,precipitation_probability&daily=weathercode&timezone=Asia%2FSingapore"
     if request.method == "GET":
-        return render_template("main_page.html", comments=Comment.query.all())
+        headers = {'Accept': 'application/json'}
+        weatherData = requests.get(url, headers=headers).json()
+        data_dict = dict.fromkeys(weatherData.get('hourly').get('time'), [])
+        time_key_update = list(data_dict.keys())
+        zipped_weather_data = list(zip(weatherData.get('hourly').get('temperature_2m'), weatherData.get('hourly').get('relativehumidity_2m'), weatherData.get('hourly').get('apparent_temperature'), weatherData.get('hourly').get('precipitation_probability')))
+        data_dict.update(list(zip(time_key_update, zipped_weather_data)))
+        return render_template("main_page.html", comments=Comment.query.all(), data=data_dict)
+    else:
+        return 'Not json'
 
     comment = Comment(content=request.form["contents"])
     db.session.add(comment)
@@ -48,8 +59,7 @@ def calculator():
     else:
         return render_template("calculator.html")
 
-"""
-@app.route('/result/<rslt>')
-def calculate_result(rslt):
-        return f"<h1>{rslt}</h1>"
-"""
+
+@app.route('/login/')
+def login():
+        return render_template('login_page.html')
