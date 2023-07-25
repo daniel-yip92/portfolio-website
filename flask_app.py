@@ -4,7 +4,7 @@
 from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_calculator import calculate
-from flask_login import login_user, LoginManager, UserMixin
+from flask_login import login_user, LoginManager, UserMixin, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 import requests
 
@@ -66,8 +66,9 @@ def index():
         zipped_weather_data = list(zip(weatherData.get('hourly').get('temperature_2m'), weatherData.get('hourly').get('relativehumidity_2m'), weatherData.get('hourly').get('apparent_temperature'), weatherData.get('hourly').get('precipitation_probability')))
         data_dict.update(list(zip(time_key_update, zipped_weather_data)))
         return render_template("main_page.html", comments=Comment.query.all(), data=data_dict)
-    else:
-        return 'Not json'
+
+    if not current_user.is_authenticated:
+        return redirect(url_for('index'))
 
     comment = Comment(content=request.form["contents"])
     db.session.add(comment)
@@ -101,4 +102,10 @@ def login():
         return render_template("login_page.html", error=True)
 
     login_user(user)
+    return redirect(url_for('index'))
+
+@app.route('/logout/')
+@login_required
+def logout():
+    logout_user()
     return redirect(url_for('index'))

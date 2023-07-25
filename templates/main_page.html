@@ -61,10 +61,15 @@
 
                         <div class="row">
                             <form action="." method="POST">
-                                <textarea class="form-control" name="contents" placeholder="Enter a comment"></textarea>
+                                {% if current_user.is_authenticated %}
+                                <textarea class="form-control" name="contents" placeholder="Enter a comment" required></textarea>
                                 <input type="submit" class="btn btn-success" value="Post comment">
+                                {% else %}
+                                <textarea class="form-control" name="contents" placeholder="Login to post a comment" disabled></textarea>
+                                {% endif %}
                             </form>
                         </div>
+
                 </div>
 
                 <div class="col">
