@@ -1,5 +1,8 @@
 
-# A very simple Flask Hello World app for you to get started with...
+# Mini Project A and B
+# Web App created with Python on the Flask framework, incorporating MySQL db
+# Created by Daniel Yip
+# July 2023
 
 from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -83,7 +86,6 @@ def calculator():
         second_int = request.form.get("inputNumber2", type=int)
         operator = request.form.get("operator")
         result = calculate(first_int, second_int, operator)
-        #return redirect(url_for("calculate_result", rslt=result))
         return render_template("calculator.html", result=result)
     else:
         return render_template("calculator.html")
