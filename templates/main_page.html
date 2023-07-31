@@ -105,7 +105,7 @@
                         </script>
                     </p>
 
-                    <p> Weather now = {{ data.get(time_now.strftime("%Y-%m-%dT%H:00")) }}</p>
+                    <p> Weather now = {{ "Temp: %s, Humidity: %s, Feels Like: %s, Rain chance: %s" % (data.get(time_now.strftime("%Y-%m-%dT%H:00"))) }}</p>
                     <table class="table table1 table-striped scrolldown" id="weather">
                         <thead>
                             <tr>
