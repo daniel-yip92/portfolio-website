@@ -93,6 +93,10 @@ def calculator():
     else:
         return render_template("calculator.html")
 
+@app.route('/resume/')
+def resume():
+    return render_template("resume.html")
+
 
 @app.route('/login/', methods=["GET", "POST"])
 def login():
