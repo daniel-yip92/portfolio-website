@@ -85,8 +85,8 @@ def index():
 @app.route('/calculator/', methods=["GET", "POST"])
 def calculator():
     if request.method == "POST":
-        first_int = request.form.get("inputNumber1", type=int)
-        second_int = request.form.get("inputNumber2", type=int)
+        first_int = request.form.get("inputNumber1", type=float)
+        second_int = request.form.get("inputNumber2", type=float)
         operator = request.form.get("operator")
         result = calculate(first_int, second_int, operator)
         return render_template("calculator.html", result=result)
