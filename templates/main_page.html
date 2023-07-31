@@ -31,7 +31,7 @@
             }
         </style>
     </head>
-    <body>
+    <body onload="startTime()">
         <div class="home">
             <h1 style="text-align: center">Mini Project A</h1>
             <h2 style="text-align: center">Portfolio Website and Simple Web App in Python using Flask.</h2>
@@ -83,7 +83,30 @@
                 <div class="col">
                     <h3>Weather in Singapore using API from Open-Meteo</h3>
                     <a href="https://open-meteo.com/">Open-Meteo</a>
-                    <table class="table table1 table-striped scrolldown">
+                    <p> Time now = {{ time_now.strftime("%Y-%m-%d") }}
+                    <span id="txt"></span>
+
+                        <script>
+                            function startTime() {
+                              const today = new Date();
+                              let h = today.getHours();
+                              let m = today.getMinutes();
+                              let s = today.getSeconds();
+                              m = checkTime(m);
+                              s = checkTime(s);
+                              document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+                              setTimeout(startTime, 1000);
+                            }
+
+                            function checkTime(i) {
+                              if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+                              return i;
+                            }
+                        </script>
+                    </p>
+
+                    <p> Weather now = {{ data.get(time_now.strftime("%Y-%m-%dT%H:00")) }}</p>
+                    <table class="table table1 table-striped scrolldown" id="weather">
                         <thead>
                             <tr>
                                 <th>Time</th>

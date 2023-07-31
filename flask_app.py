@@ -11,6 +11,7 @@ from flask_calculator import calculate
 from flask_login import login_user, LoginManager, UserMixin, logout_user, login_required, current_user
 from werkzeug.security import check_password_hash
 from datetime import datetime
+import pytz
 import requests
 
 app = Flask(__name__)
@@ -69,7 +70,9 @@ def index():
         time_key_update = list(data_dict.keys())
         zipped_weather_data = list(zip(weatherData.get('hourly').get('temperature_2m'), weatherData.get('hourly').get('relativehumidity_2m'), weatherData.get('hourly').get('apparent_temperature'), weatherData.get('hourly').get('precipitation_probability')))
         data_dict.update(list(zip(time_key_update, zipped_weather_data)))
-        return render_template("main_page.html", comments=Comment.query.all(), data=data_dict)
+        sg_tz = pytz.timezone('Asia/Singapore')
+        time_sg = datetime.now(sg_tz)
+        return render_template("main_page.html", comments=Comment.query.all(), data=data_dict, time_now=time_sg)
 
     if not current_user.is_authenticated:
         return redirect(url_for('index'))
